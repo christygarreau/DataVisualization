@@ -4,56 +4,46 @@ import java.util.ArrayList;
 public class DataBank implements Sortable{
     PApplet p;
     ArrayList<CarDatum> carBank;
-    ArrayList<PollutionDatum> pollutionBank;
+    CarsPerYear carsPerYear = new CarsPerYear();
 
     public DataBank(PApplet p) {
         this.p = p;
+        carBank = carsPerYear.getCars();
         sort();
+        printBank(carBank.size(),carBank);
     }
 
     public void sort() {
-        String[] carArr = new String[carBank.size()];
-        carArr = carBank.toArray(carArr);
-
-        String[] pollutionArr = new String[carBank.size()];
-        pollutionArr = pollutionBank.toArray(pollutionArr);
-
-        selectionSort(0, carArr);
-        selectionSort(0, pollutionArr);
-
-        //carBank = new ArrayList<CarDatum>(Arrays.asList(carArr));
-        //pollutionBank = new ArrayList<PollutionDatum>(Arrays.asList(pollutionArr));
+        selectionSort(0, carBank);
     }
 
-    private void selectionSort(int start, String[] arr) {
+    private void selectionSort(int start, ArrayList<CarDatum> carBank) {
         if (start == 0) {
-            System.out.print("Selection sorting");
+            System.out.print("Begin Selection Sort...");
         }
-        if (start < arr.length) {
+        if (start < carBank.size()) {
             int lowest = start;
-            for (int i = start; i < arr.length; i++) {
-                if (arr[i].compareTo(arr[lowest]) < 0) {
+            for (int i = start; i < carBank.size(); i++) {
+                if (carBank.get(i).getCars() < (carBank.get(lowest).getCars())) {
                     lowest = i;
                 }
             }
-            String temp = arr[start];
-            arr[start] = arr[lowest];
-            arr[lowest] = temp;
+            CarDatum temp = carBank.get(start);
+            carBank.set(start, carBank.get(lowest));
+            carBank.set(lowest, temp);
 
-
-            if (start % (arr.length/15) == 0) { //every 15th
-                System.out.print(".");
-            }
-
-            selectionSort(start+1, arr);
+            selectionSort(start+1, carBank);
         } else {
-            System.out.println(" Done!");
+            System.out.println("End Selection Sort.");
         }
     }
 
-    private void printBank(int number, String[] arr) {
+    private void printBank(int number, ArrayList<CarDatum> carBank) {
         for (int i = 0; i < number; i++) {
-            System.out.print("\"" + arr[i] + "\", ");
+            System.out.print("\"" + carBank.get(i).getCars() + "\", ");
+            System.out.print("\"" + carBank.get(i).getPollution() + "\", ");
+            System.out.print("\"" + carBank.get(i).getYear() + "\", ");
+            System.out.println();
         }
         System.out.println();
     }

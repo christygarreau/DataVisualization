@@ -11,7 +11,9 @@ public class DataAnalysisApp extends PApplet{
         PApplet.main("DataAnalysisApp");
     }
 
-    public DataAnalysisApp() {}
+    public DataAnalysisApp() {
+        app = this;
+    }
 
     public void settings() {
         size(1000,500);
@@ -26,6 +28,9 @@ public class DataAnalysisApp extends PApplet{
     public void draw() {
         background(255);
         stroke(0);
+        int sizeOfBox = 8;
+        rect(width/sizeOfBox,height/sizeOfBox,1000-1000/sizeOfBox,500-500/sizeOfBox);
+
         noLoop();
     }
     public static DataAnalysisApp getApp(){
