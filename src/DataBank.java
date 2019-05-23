@@ -10,7 +10,7 @@ public class DataBank implements Sortable{
         this.p = p;
         carBank = carsPerYear.getCars();
         sort();
-        printBank(carBank.size(),carBank);
+        //printBank(carBank.size(),carBank);
     }
 
     public void sort() {
