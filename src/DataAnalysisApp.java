@@ -24,24 +24,29 @@ public class DataAnalysisApp extends PApplet{
         textAlign(CENTER, CENTER);
         dataBank = new DataBank(this);
         dataBank.sort();
-        if(!graphTable){
-            background(255);
-            visualizeGraph();
-        } else if(graphTable){
-            background(255);
-            visualizeDataTable();
-        }
     }
 
     public void draw() {
+        if(!graphTable){//graph
+            background(255);
+            visualizeGraph();
+            fill(0);
+            text("Press SPACE to switch to Table", width/2, 20);
+            fill(255);
+        } else if(graphTable){//table
+            background(255);
+            visualizeDataTable();
+            fill(0);
+            text("Press SPACE to switch to Graph", width/2, 20);
+            fill(255);
+        }
         noLoop();
     }
 
     public void keyPressed(){
-        if(key == 1){
-            graphTable = true;
-        }else if(key == 2){
-            graphTable = false;
+        if(key == ' '){
+            graphTable = !graphTable;
+            redraw();
         }
     }
 
@@ -50,6 +55,7 @@ public class DataAnalysisApp extends PApplet{
         final int GRAPH_Y = height/BOX_SIZE; //height of entire box
         final int BOX_WIDTH = (width-2*(GRAPH_X))/BOX_SIZE;
         final int BOX_HEIGHT = (height-2*(GRAPH_Y))/BOX_SIZE;
+
         stroke(0);
         textAlign(CENTER);
         rect(GRAPH_X, GRAPH_Y, width-2*(GRAPH_X), height-2*(GRAPH_Y));
@@ -58,6 +64,8 @@ public class DataAnalysisApp extends PApplet{
         text("Years", width/2, height - 10);
         fill(255, 191, 0);
         text("Annual\nGreenhouse\nGas\nIndex", 45, 25);
+        fill(255,157,0);
+        text("Size of\nBubble based\non Number\nof Electric\nCars by the\nThousands in\nthe U.S.", width-(width/20), height/8 );
 
         stroke(200);
         fill(0);
@@ -92,14 +100,18 @@ public class DataAnalysisApp extends PApplet{
 
         for(int i = 0; i < 10; i++){//generates horizontals
             line(GRAPH_X,GRAPH_Y + (BOX_HEIGHT*i),width-(GRAPH_X),GRAPH_Y + (BOX_HEIGHT*i));
-            int y = height / BOX_SIZE + BOX_HEIGHT/2 + BOX_HEIGHT*i;
+            int y = height / BOX_SIZE + BOX_HEIGHT/2 + BOX_HEIGHT*i + 5;
 
             if(i<9) {
+                fill(180,0,0);
                 text(dataBank.carBank.get(i).getYear(), (width / BOX_SIZE) + (BOX_WIDTH/2), y);
+                fill(170, 105, 0);
                 text(dataBank.carBank.get(i).getCars(), GRAPH_X + (BOX_WIDTH/2) + BOX_WIDTH, y);
+                fill(160, 139, 0);
                 text(dataBank.carBank.get(i).getPollution(), GRAPH_X + (BOX_WIDTH/2) + 2*BOX_WIDTH, y);
             }
         }
+        fill(0);
         for(int i = 0; i < 4; i++){//generates verticals
             line(GRAPH_X + (BOX_WIDTH*i),GRAPH_Y,GRAPH_X + (BOX_WIDTH*i),height-(GRAPH_Y));
         }
